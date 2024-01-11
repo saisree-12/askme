@@ -129,8 +129,6 @@ const Askme = () => {
           </div>
         </form> 
           <div className='flex w-full p-3 px-6 gap-10 '>
-            {/* <button type='submit' className="text-white bg-green-500 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg shadow-2xl font-bold">
-            {loading?'Fetching' : 'Send'}</button> */}
             
             <div class="flex items-center justify-center w-full">
                 <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-28 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
