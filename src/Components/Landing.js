@@ -1,7 +1,9 @@
 import React from 'react'
 import NavbarComp from './NavbarComp'
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Landing = () => {
+  const { loginWithRedirect } = useAuth0();
   return (
     <section class="text-gray-600 body-font h-screen flex justify-center items-center bg-[#164863]">
         <div class="container py-24 flex  bg-[rgba(0,0,0,.2)] rounded-2xl items-center justify-center flex-col">
@@ -16,7 +18,8 @@ const Landing = () => {
              conversations – join AskMe today and let your inquiries spark insightful exchanges.</p>
             <div class="flex justify-center p-4">
                 <button class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded font-bold text-lg" onClick={() => window.location.replace('/signup')}>SignUp</button>
-                <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded font-bold text-lg" onClick={() => window.location.replace('/login')}>LogIn</button>
+                {/* <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded font-bold text-lg" onClick={() => window.location.replace('/login')}>LogIn</button> */}
+                <button class="ml-4 inline-flex text-gray-700 bg-gray-100 border-0 py-2 px-6 focus:outline-none hover:bg-gray-200 rounded font-bold text-lg" onClick={() => loginWithRedirect()}>LogIn</button>
             </div>
             </div>
         </div>

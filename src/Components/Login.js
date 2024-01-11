@@ -63,7 +63,7 @@ const Login = () => {
               />
             </div>
           </div>
-          
+
           <button type='submit' className='bg-green-500 w-full px-6 py-2 mt-8 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold text-white'>Login</button>
 
           <a href='/'>
