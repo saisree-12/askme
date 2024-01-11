@@ -29,7 +29,6 @@ app.use(express.static('public'));
 // Handle file upload
 app.post('/uploaded', upload.single('file'), (req, res) => {
   // Access the uploaded file using req.file
-  console.log('helo')
 
   const uploadedFile = req.file;
 
