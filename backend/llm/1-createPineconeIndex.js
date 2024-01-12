@@ -1,4 +1,4 @@
-export const createPineconeIndex = async (
+const createPineconeIndex = async (
   client,
   indexName,
   vectorDimension
@@ -28,3 +28,5 @@ export const createPineconeIndex = async (
     console.log(`"${indexName}" already exists.`);
   }
 };
+
+module.exports = { createPineconeIndex };

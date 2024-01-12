@@ -11,70 +11,16 @@ const Askme = () => {
   const [empty,setEmpty] = React.useState(true)
   const [loading,setLoading] = React.useState(false);
 
-  const handleSubmit = async (e) => {
+  const getAnswer = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // const options = {
-    //   method: 'POST',
-    //   url: 'https://chatgpt53.p.rapidapi.com/',
-    //   headers: {
-    //     'content-type': 'application/json',
-    //     'X-RapidAPI-Key': 'af7e7228d0mshe37dd20a990441bp167948jsn8a253b5f28b4',
-    //     'X-RapidAPI-Host': 'chatgpt53.p.rapidapi.com'
-    //   },
-    //   data: {
-    //     messages: [
-    //       {
-    //         role: 'user',
-    //         content: `${question}`
-    //       }
-    //     ],
-    //     temperature: 1
-    //   }
-    // };
-
-    const options = {
-      method: 'POST',
-      url: 'https://chatgpt-openai1.p.rapidapi.com/ask',
-      headers: {
-        'content-type': 'application/json',
-        'X-RapidAPI-Key': 'af7e7228d0mshe37dd20a990441bp167948jsn8a253b5f28b4',
-        'X-RapidAPI-Host': 'chatgpt-openai1.p.rapidapi.com'
-      },
-      data: {
-        query: `${question}`
-      }
-    };
-    
-    try {
-      if (question) {
-        const response = await axios.request(options);
-        console.log(response)
-        if(response){
-          setChat(prevChat => [...prevChat, { question: `${question}`, answer: response.data.response }]);
-          setQuestion('');
-          await new Promise((resolve) => setTimeout(resolve,1000));
-          setLoading(false);
-        }
-      } 
-      else {
-        toast.error('Please enter the question',{
-          style: {
-            color: 'red',
-          },
-        });
-        setLoading(false)
-      } 
-    } catch (error) {
-      toast.error('Please Try Again Later...',{
-        style: {
-          color: 'red',
-        },
-      });
-      setLoading(false)
-      console.error("Error:", error.response ? error.response.status : "Unknown", error.response ? error.response.data : "No response data");
-    }
-  }
+    await axios.post('http://localhost:5000/askme', {question: question})
+    .then(response => {
+      response.data.answer && setChat(prevChat => [...prevChat, { question: `${question}`, answer: response.data.answer }]);
+    })
+    .catch((err) => {
+      return err;
+    })
+}
   const handleCopyToClipboard = (answer) => {
     copy(answer);
     toast.success('Answer copied to clipboard!', {
@@ -93,7 +39,7 @@ const Askme = () => {
 
   const [selectedFile, setSelectedFile] = React.useState(null);
 
-  const fileUpload = (event) => {
+  const fileUpload = async (event) => {
     setSelectedFile(event.target.files[0]);
     console.log(event.target.files)
     if (selectedFile) {
@@ -106,22 +52,22 @@ const Askme = () => {
         }
       }
 
-      axios.post('http://localhost:5000/uploaded', formData, config)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        }) 
+      await axios.post('http://localhost:5000/uploaded', formData, config)
+        .then((response) => {
+          console.log(response);
+        })
         .catch((error) => {
           console.error('Error uploading file:', error);
         });
     }
   };
 
+
   return ( 
     <> 
     <div className='flex h-screen bg-[#164863] flex-wrap'>
       <div className='flex flex-col-reverse h-full md:px-20 py-5 w-full pb-6 fixed  top-0 '>
-        <form className='' onSubmit={handleSubmit}>
+        <form className='' onSubmit={getAnswer}>
           <div className='flex w-full p-3 px-6 gap-10 '>
             <input className='w-full py-3 rounded px-5 font-semibold text-lg outline-none' autoFocus type='text' placeholder='Start Typing...'  onChange={(e) => {setQuestion(e.target.value);}}></input>
             <button type='submit' className="text-white bg-green-500 py-2 px-6 focus:outline-none hover:bg-green-600 rounded text-lg shadow-2xl font-bold">
@@ -170,7 +116,7 @@ const Askme = () => {
         ))}
     </div> 
         <div className='md:px-8 px-3 flex items-center text-white'>
-          <img src='/askme.png' width={300} height={300} className=''></img>
+          <img src='/askme.png' width={300} height={300} alt='' className=''></img>
           <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
             toast.success("Signing Off.. hits us up later✌️")
             window.location.replace('/login');

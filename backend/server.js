@@ -5,10 +5,19 @@ const bodyParser = require('body-parser');
 const db = require('./connection')
 const db_users = require('./Databases/Users')
 const fileUpload = require('./Fileupload')
+const { queryPineconeAndQueryGPT } = require('./llm/queryPineconeAndQueryGPT.js')
+const { PineconeClient } = require("@pinecone-database/pinecone");
 
 require('dotenv').config()
 
 const app = express();
+
+const client = new PineconeClient();
+client.init({
+  apiKey: process.env.PINECONE_API_KEY,
+  environment: process.env.PINECONE_ENVIRONMENT,
+});
+let indexName = "index01";
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -40,6 +49,13 @@ app.post('/login',async (req,res) => {
     .catch(() => {
         res.send({flag:false})
     })
+})
+
+app.post('/askme',(req,res) => {
+    const question = req.body.question;
+    console.log(question);
+    let result = queryPineconeAndQueryGPT(client,indexName,question);
+    res.status(200).send({answer:result});
 })
 
 

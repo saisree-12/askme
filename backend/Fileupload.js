@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const main = require('./llm/0-main.js')
 
 const app = express();
 
@@ -29,11 +30,13 @@ app.use(express.static('public'));
 // Handle file upload
 app.post('/uploaded', upload.single('file'), (req, res) => {
   // Access the uploaded file using req.file
-
+  console.log('HELLO');
   const uploadedFile = req.file;
 
   // You can do further processing with the file, such as storing the filename in a database
   const fileName = uploadedFile.filename;
+
+  main();
 
   // Respond with a success message
   res.json({ message: 'File uploaded successfully', fileName });

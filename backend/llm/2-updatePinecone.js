@@ -1,8 +1,9 @@
 // 1. Import required modules
-import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+const { OpenAIEmbeddings } = require("langchain/embeddings/openai");
+const { RecursiveCharacterTextSplitter } = require("langchain/text_splitter");
+
 // 2. Export updatePinecone function
-export const updatePinecone = async (client, indexName, docs) => {
+const updatePinecone = async (client, indexName, docs) => {
   console.log("Retrieving Pinecone index...");
 // 3. Retrieve Pinecone index
   const index = client.Index(indexName);
@@ -63,3 +64,6 @@ export const updatePinecone = async (client, indexName, docs) => {
     console.log(`Pinecone index updated with ${chunks.length} vectors`);
   }
 };
+
+
+module.exports = { updatePinecone };
