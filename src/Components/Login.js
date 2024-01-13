@@ -16,7 +16,7 @@ const Login = () => {
                   color: 'red',
                 },
               });
-        })
+        }) 
     }
   return (
     <>

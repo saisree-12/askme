@@ -117,12 +117,18 @@ const Askme = () => {
     </div> 
         <div className='md:px-8 px-3 flex items-center text-white'>
           <img src='/askme.png' width={300} height={300} alt='' className=''></img>
+          <div className='flex ml-auto gap-20'>
+          <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
+            toast.success("Signing Off.. hits us up later✌️")
+            window.location.replace('/chat/history');
+            }} >Prev_chat</button>
           <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
             toast.success("Signing Off.. hits us up later✌️")
             window.location.replace('/login');
-            }} >Exit</button>
+            }} >Exit</button> 
+          </div>
         </div>
-      </div>
+      </div> 
     </div>
     <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </>
