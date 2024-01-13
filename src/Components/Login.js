@@ -1,15 +1,17 @@
 import React from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { useNavigate } from 'react-router-dom';
+  
 const Login = () => {
+  const navigate = useNavigate();
     const [username,setUsername] = React.useState('');
     const [password,setPassword] = React.useState('');
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:5000/signup',{username:username,password:password}).then((res) => {
             if(res.data.flag)
-                window.location.replace('/askme')
+                navigate('/askme')
             else
             toast.error('Please Try Again Later...',{
                 style: {

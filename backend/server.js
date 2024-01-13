@@ -58,6 +58,16 @@ app.post('/askme',(req,res) => {
     res.status(200).send({answer:result});
 })
 
+app.post('/gethistory',async (req,res) => {
+    await History.find({username:req.body.username})
+    .then(response => {
+        res.status(200).send({flag:true,data:response})
+    })
+    .catch(() => {
+        res.status(200).send({flag:false})
+    })
+})
+
 
 app.listen(5000,() => {
     console.log('Server started on port 5000');
