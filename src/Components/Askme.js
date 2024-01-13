@@ -134,7 +134,7 @@ const Askme = () => {
             }} >Prev_chat</button>
           <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
             toast.success("Signing Off.. hits us up later✌️")
-            window.location.replace('/login');
+            window.location.replace('/');
             }} >Exit</button> 
           </div>
         </div>

@@ -4,10 +4,15 @@ import copy from 'clipboard-copy'
 import { HiOutlineClipboardCopy } from 'react-icons/hi'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 const History = () => {
+  const navigate = useNavigate()
+  if(Cookies.get('process_id')===undefined){
+    navigate('/login')
+  }
   const location = useLocation();
     const [chat,setChat] = React.useState([]);
   const [question,setQuestion] = React.useState('');
@@ -36,7 +41,8 @@ const History = () => {
         username:location.state.username
       })
       .then(response => {
-        setChat(response.data)
+        console.log(response.data)
+        setChat(response.data.data)
       })
       .catch((err) => {
         return err;
@@ -76,7 +82,7 @@ const History = () => {
         <div className='md:px-8 px-3 flex items-center text-white'>
           <img src='/askme.png' width={300} height={300} alt='' className=''></img>
           <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
-            window.location.replace('/login');
+            window.location.replace('/');
             }} >Exit</button> 
         </div>
       </div> 
