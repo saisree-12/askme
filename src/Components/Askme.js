@@ -1,12 +1,22 @@
 import React from 'react'
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import copy from 'clipboard-copy'
 import { HiOutlineClipboardCopy } from 'react-icons/hi'
+import { useNavigate } from 'react-router-dom';
 
 const Askme = () => {
-    const [chat,setChat] = React.useState([]);
+  const navigate = useNavigate();
+  if(Cookies.get('process_id')===undefined){
+    navigate('/login')
+  }
+  const key = 'qawsedrftgyhujukol'
+  const ubytes = CryptoJS.AES.decrypt(Cookies.get('process_id'),key);
+  const d_uname = JSON.parse(ubytes.toString(CryptoJS.enc.Utf8));
+  const [chat,setChat] = React.useState([]);
   const [question,setQuestion] = React.useState('');
   const [empty,setEmpty] = React.useState(true)
   const [loading,setLoading] = React.useState(false);
@@ -120,7 +130,7 @@ const Askme = () => {
           <div className='flex ml-auto gap-20'>
           <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
             toast.success("Signing Off.. hits us up later✌️")
-            window.location.replace('/chat/history');
+            navigate('/chat/history',{state:{username:d_uname}});
             }} >Prev_chat</button>
           <button className='bg-green-500 px-6 py-2 ml-auto focus:outline-none hover:bg-green-600 rounded shadow-2xl font-bold' onClick={() => {
             toast.success("Signing Off.. hits us up later✌️")

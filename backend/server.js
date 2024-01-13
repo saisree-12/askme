@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const db = require('./connection')
 const db_users = require('./Databases/Users')
+const History = require('./Databases/History')
 const fileUpload = require('./Fileupload')
 const { queryPineconeAndQueryGPT } = require('./llm/queryPineconeAndQueryGPT.js')
 const { PineconeClient } = require("@pinecone-database/pinecone");
@@ -59,8 +60,10 @@ app.post('/askme',(req,res) => {
 })
 
 app.post('/gethistory',async (req,res) => {
+    console.log(req.body.username);
     await History.find({username:req.body.username})
     .then(response => {
+        console.log(response);
         res.status(200).send({flag:true,data:response})
     })
     .catch(() => {

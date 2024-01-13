@@ -2,22 +2,28 @@ import React from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-  
+import Cookies from 'js-cookie';
+import CryptoJS from 'crypto-js';
+
+
 const Login = () => {
   const navigate = useNavigate();
     const [username,setUsername] = React.useState('');
     const [password,setPassword] = React.useState('');
+    const key = 'qawsedrftgyhujukol'
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/signup',{username:username,password:password}).then((res) => {
-            if(res.data.flag)
+        axios.post('http://localhost:5000/login',{username:username,password:password}).then((res) => {
+            if(res.data.flag){
+                const encrypteduname = CryptoJS.AES.encrypt(JSON.stringify(username),key).toString()
+                Cookies.set('process_id',encrypteduname,{path:'/',expires:1})
                 navigate('/askme')
-            else
+            }else{
             toast.error('Please Try Again Later...',{
                 style: {
                   color: 'red',
                 },
-              });
+              })};
         }) 
     }
   return (
@@ -25,7 +31,7 @@ const Login = () => {
     <div class="w-full h-screen flex items-center justify-center bg-[#164863]">
       <form class="w-full md:w-1/3 rounded-lg" onSubmit={handleSubmit}>
         <div class="flex font-bold justify-center">
-          <img class="mb-3" height={300} width={300} src="/askme.png" />
+          <img class="mb-3" height={300} width={300} src="/askme.png" alt=''/>
         </div>
         <div class="px-12 py-20 rounded bg-[rgba(0,0,0,.2)]">
         <h2 class="text-2xl text-center text-gray-200 mb-8 font-bold">Login</h2>

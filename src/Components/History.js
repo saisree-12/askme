@@ -4,9 +4,11 @@ import copy from 'clipboard-copy'
 import { HiOutlineClipboardCopy } from 'react-icons/hi'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useLocation } from 'react-router-dom';
 
 
 const History = () => {
+  const location = useLocation();
     const [chat,setChat] = React.useState([]);
   const [question,setQuestion] = React.useState('');
   const [empty,setEmpty] = React.useState(true)
@@ -27,6 +29,21 @@ const History = () => {
       }
     });
   };
+
+  React.useEffect(() => {
+    const getHistory = async () => {
+      await axios.post('http://localhost:5000/gethistory',{
+        username:location.state.username
+      })
+      .then(response => {
+        setChat(response.data)
+      })
+      .catch((err) => {
+        return err;
+      })
+    }
+    getHistory()
+  },[])
   return (
     <>
     <div className='flex h-screen bg-[#164863] flex-wrap'>
