@@ -6,6 +6,7 @@ import Login from './Components/Login';
 import Askme from './Components/Askme';
 import Register from './Components/Register';
 import Landing from './Components/Landing';
+import History from './Components/History';
 
 function App() {
   return(
@@ -14,7 +15,9 @@ function App() {
       <Route path='/login' element={<Login />} />
       <Route path='/' element={<Landing />}/>
       <Route path='/signup' element={<Register />}/>
-      <Route path='/askme' element={<Askme />} />
+      <Route path='/askme' element={<Askme />} /> 
+      <Route path='/chat/history' element={<History />} /> 
+
     </Routes>
     </BrowserRouter>
   )
